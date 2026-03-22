@@ -31,8 +31,8 @@ jobs:
         if: github.ref_type == 'tag'
         run: ./gradlew assembleRelease
 
-      - name: Releasing using Hub
-        uses: sangatdesai/release-apk@main
+      - name: Publish APK
+        uses: alsrb968/action-release-apk@master
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           APP_FOLDER: app
