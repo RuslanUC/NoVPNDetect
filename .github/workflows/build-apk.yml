@@ -36,13 +36,16 @@ jobs:
         run: |
           if [[ "${{ github.ref_type }}" == "tag" ]]; then
             echo "APK_PATH=app/build/outputs/apk/release/app-release.apk" >> $GITHUB_ENV
+            echo "APK_NAME=app-release.apk" >> $GITHUB_ENV
           else
             echo "APK_PATH=app/build/outputs/apk/debug/app-debug.apk" >> $GITHUB_ENV
+            echo "APK_NAME=app-debug.apk" >> $GITHUB_ENV
           fi
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
+          name: ${{ env.APK_NAME }}
           path: ${{ env.APK_PATH }}
 
       - name: Publish APK
