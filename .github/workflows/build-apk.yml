@@ -31,7 +31,7 @@ jobs:
         if: github.ref_type == 'tag'
         run: ./gradlew assembleRelease
 
-      - name Set APK path
+      - name: Set APK path
       - run: |
           if [[ "${{ github.ref_type }}" == "tag" ]]; then
             echo "APK_PATH=app/build/outputs/apk/release/app-release.apk" >> $GITHUB_ENV
