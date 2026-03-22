@@ -31,8 +31,20 @@ jobs:
         if: github.ref_type == 'tag'
         run: ./gradlew assembleRelease
 
+      - name Set APK path
+      - run: |
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            echo "APK_PATH=app/build/outputs/apk/release/app-release.apk" >> $GITHUB_ENV
+          else
+            echo "APK_PATH=app/build/outputs/apk/debug/app-debug.apk" >> $GITHUB_ENV
+          fi
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: ${{ env.APK_PATH }}
+
       - name: Publish APK
-        uses: alsrb968/action-release-apk@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          APP_FOLDER: app
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.APK_PATH }}
