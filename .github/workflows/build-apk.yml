@@ -24,6 +24,13 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
+      - name: Use github keystore for release
+        run: |
+          echo 'RELEASE_STORE_FILE=github.keystore' >> gradle.properties
+          echo 'RELEASE_STORE_PASSWORD=123456789' >> gradle.properties
+          echo 'RELEASE_KEY_ALIAS=key' >> gradle.properties
+          echo 'RELEASE_KEY_PASSWORD=123456789' >> gradle.properties
+
       - name: Build Debug APK
         if: github.ref_type == 'branch'
         run: ./gradlew assembleDebug
