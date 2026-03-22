@@ -1,0 +1,37 @@
+name: Build & Publish Debug/Release APK
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+
+jobs:
+  Gradle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup JDK
+        uses: actions/setup-java@м5
+        with:
+          java-version: 11
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Build Debug APK
+        if: github.ref_type == 'branch'
+        run: ./gradlew assembleDebug
+
+      - name: Build Release APK
+        if: github.ref_type == 'tag'
+        run: ./gradlew assembleRelease
+
+      - name: Releasing using Hub
+        uses: sangatdesai/release-apk@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          APP_FOLDER: app
