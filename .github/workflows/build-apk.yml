@@ -46,6 +46,7 @@ jobs:
           path: ${{ env.APK_PATH }}
 
       - name: Publish APK
+        if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ env.APK_PATH }}
