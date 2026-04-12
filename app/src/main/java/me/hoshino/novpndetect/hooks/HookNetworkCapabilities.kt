@@ -25,19 +25,22 @@ class HookNetworkCapabilities : XHook {
                 Log.i(TAG, "NetworkCapabilities.hasTransport(${param.args[0]})")
 
                 var probablyTransport = NetworkCapabilities.TRANSPORT_WIFI
-                for(iface in NetworkInterface.getNetworkInterfaces()) {
-                    if(!iface.isUp || iface.isLoopback)
-                        continue
+                val interfaces = NetworkInterface.getNetworkInterfaces()
+                if(interfaces != null) {
+                    for (iface in interfaces) {
+                        if (!iface.isUp || iface.isLoopback)
+                            continue
 
-                    if(iface.name.contains("wlan")) {
-                        probablyTransport = NetworkCapabilities.TRANSPORT_WIFI
-                        break
-                    } else if(iface.name.contains("rmnet_data")) {
-                        probablyTransport = NetworkCapabilities.TRANSPORT_CELLULAR
-                        break
-                    } else if(iface.name.contains("eth")) {
-                        probablyTransport = NetworkCapabilities.TRANSPORT_ETHERNET
-                        break
+                        if (iface.name.contains("wlan")) {
+                            probablyTransport = NetworkCapabilities.TRANSPORT_WIFI
+                            break
+                        } else if (iface.name.contains("rmnet_data")) {
+                            probablyTransport = NetworkCapabilities.TRANSPORT_CELLULAR
+                            break
+                        } else if (iface.name.contains("eth")) {
+                            probablyTransport = NetworkCapabilities.TRANSPORT_ETHERNET
+                            break
+                        }
                     }
                 }
 

@@ -4,6 +4,7 @@ import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 import me.hoshino.novpndetect.hooks.HookConnectivityManager
+import me.hoshino.novpndetect.hooks.HookLinkProperties
 import me.hoshino.novpndetect.hooks.HookNetworkCapabilities
 import me.hoshino.novpndetect.hooks.HookNetworkInfo
 import me.hoshino.novpndetect.hooks.HookNetworkInterface
@@ -23,6 +24,7 @@ class XposedInit : IXposedHookLoadPackage {
                 HookNetworkCapabilities(),
                 HookNetworkInfo(),
                 HookNetworkRequestBuilder(),
+                HookLinkProperties(),
             )
 
         hooks.forEach {
